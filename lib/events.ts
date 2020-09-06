@@ -273,7 +273,6 @@ export const initData = (
 		id,
 		discordId: member ? member.id : id,
 		updated: Date.now(),
-		accounts: [],
 		punished: false,
 		description: undefined,
 		membership: [
