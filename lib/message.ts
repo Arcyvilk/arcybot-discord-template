@@ -56,10 +56,10 @@ const answerCommand = async (msg: Discord.Message) => {
 const checkForReactionTriggers = async (msg: Discord.Message) => {
 	const reactions = await findAllReactionsInMessage(msg.content);
 
-	// EXAMPLE
-	isThisFunctionalReactionExample(msg)
-		? await findReactionsById('function_reaction')
-		: await findAllReactionsInMessage(msg.content);
+	// EXAMPLE OF CUSTOM REACTION
+	// const reactions = isThisFunctionalReactionExample(msg)
+	// 	? await findReactionsById('function_reaction')
+	// 	: await findAllReactionsInMessage(msg.content);
 	// END OF EXAMPLE
 
 	if (reactions.length === 0) {
@@ -104,7 +104,7 @@ const classifyMessage = async (msg: Discord.Message): Promise<void> => {
 export { classifyMessage, isUserAdmin };
 
 // EXAMPLE
-const isThisFunctionalReactionExample = async (msg: Discord.Message) => {
+const isThisFunctionalReactionExample = (msg: Discord.Message) => {
 	const allUpperCase = msg.content.toUpperCase();
 	return allUpperCase === msg.content;
 };

@@ -175,87 +175,9 @@ export async function findAllReactionsInMessage(
 	});
 }
 
+// INITIALIZING THE FRESH DB
+
 export async function completeDb(): Promise<void> {
-	const fillOptions = () => {
-		const options = [
-			{ option: 'commandSymbol', value: '!' },
-			{ option: 'assignableRoles', value: [] },
-			{ option: 'jokeRoles', value: [] },
-			{ option: 'modRoles', value: [] },
-			{ option: 'membershipRoles', value: [] },
-			{ option: 'topMembers', value: 10 },
-			{ option: 'room_log_msgs', value: [{ id: 0, guild: 0 }] },
-			{ option: 'room_log_users', value: [{ id: 0, guild: 0 }] },
-		];
-		insertMany('options', options);
-	};
-	const fillCommands = () => {
-		const commands = [
-			{
-				keyword: 'help',
-				isDisabled: false,
-				isProtected: false,
-				isModOnly: false,
-				refusal: 'No.',
-				category: 'basic',
-			},
-			{
-				keyword: 'h',
-				isDisabled: false,
-				isProtected: false,
-				isModOnly: false,
-				refusal: 'No.',
-				category: 'basic',
-			},
-			{
-				keyword: 'hmod',
-				isDisabled: false,
-				isProtected: false,
-				isModOnly: true,
-				description: 'returns the list of all moderator commands',
-				refusal: 'No.',
-				category: 'basic',
-			},
-		];
-		insertMany('commands', commands);
-	};
-	const fillReactions = () => {
-		const reactions = [
-			{
-				keywords: ['text_reaction'],
-				reaction_list: [
-					{
-						chance: 100,
-						response:
-							"This reaction will cause the bot to react with this sentence when it detects 'text_reaction' keyword text",
-					},
-				],
-			},
-			{
-				keywords: ['emoji_reaction'],
-				reaction_list: [
-					{
-						chance: 100,
-						emoji: '🍿',
-					},
-				],
-			},
-			{
-				id: 'function_reaction',
-				keywords: [],
-				reaction_list: [
-					{
-						chance: 100,
-						response: `This is more complicated reaction - 
-							bot looks for the condition from isThisFunctionalReactionExample 
-							function (lib/message.ts), and if it's fulfilled, reacts. 
-							It does not take keywords into consideration.`,
-					},
-				],
-			},
-		];
-		insertMany('reactions', reactions);
-	};
 	await db
 		.createCollection('options')
 		.then(() => {
@@ -282,3 +204,87 @@ export async function completeDb(): Promise<void> {
 		.then(() => log.INFO('Missing collection USERS created!'))
 		.catch(() => log.INFO('Collection USERS already exists.'));
 }
+
+const fillOptions = () => {
+	const options = [
+		{ option: 'commandSymbol', value: '!' },
+		{ option: 'assignableRoles', value: [] },
+		{ option: 'jokeRoles', value: [] },
+		{ option: 'modRoles', value: [] },
+		{ option: 'membershipRoles', value: [] },
+		{ option: 'topMembers', value: 10 },
+		{ option: 'roomLogMsgs', value: [{ id: 0, guild: 0 }] },
+		{ option: 'roomLogUsers', value: [{ id: 0, guild: 0 }] },
+	];
+	insertMany('options', options);
+};
+const fillCommands = () => {
+	const commands = [
+		{
+			keyword: 'help',
+			isDisabled: false,
+			isProtected: false,
+			isModOnly: false,
+			description: 'returns the list of all basic commands',
+			refusal: 'No.',
+			category: 'basic',
+		},
+		{
+			keyword: 'h',
+			isDisabled: false,
+			isProtected: false,
+			isModOnly: false,
+			description: 'returns the list of all basic commands',
+			refusal: 'No.',
+			category: 'basic',
+		},
+		{
+			keyword: 'hmod',
+			isDisabled: false,
+			isProtected: false,
+			isModOnly: true,
+			description: 'returns the list of all moderator commands',
+			refusal: 'No.',
+			category: 'basic',
+		},
+	];
+	insertMany('commands', commands);
+};
+const fillReactions = () => {
+	const reactions = [
+		{
+			keywords: ['text_reaction'],
+			reactionList: [
+				{
+					chance: 100,
+					response:
+						"This reaction will cause the bot to react with this sentence when it detects 'text_reaction' keyword text",
+				},
+			],
+		},
+		{
+			keywords: ['emoji_reaction'],
+			reactionList: [
+				{
+					chance: 100,
+					emoji: '🍿',
+				},
+			],
+		},
+		{
+			id: 'function_reaction',
+			keywords: [null],
+			reactionList: [
+				{
+					chance: 100,
+					response:
+						'This is more complicated reaction - ' +
+						'bot looks for the condition from isThisFunctionalReactionExample' +
+						"function (lib/message.ts), and if it's fulfilled, reacts. " +
+						'It does not take keywords into consideration.',
+				},
+			],
+		},
+	];
+	insertMany('reactions', reactions);
+};

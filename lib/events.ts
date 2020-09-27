@@ -263,15 +263,15 @@ export const initData = (
 	msg?: Discord.Message,
 ): User | void => {
 	// member = null means that they used to be part of Discord but aren't anymore, or Discord doesn't recognize them
-	if (!id || !msg) return;
+	if (!id && !msg) return;
 	const serverId = () => {
 		if (member && member.guild.id) return member.guild.id;
 		if (msg && msg.guild && msg.guild.id) return msg.guild.id;
 		return '0';
 	};
 	return {
-		id,
-		discordId: member ? member.id : id,
+		id: member?.id ?? id ?? '0',
+		discordId: member?.id ?? id ?? '0',
 		updated: Date.now(),
 		punished: false,
 		description: undefined,
@@ -310,10 +310,10 @@ export const handleUserNotInDatabase = async (
 		member: Discord.GuildMember | Discord.User,
 		memberInDataBase,
 	) => {
-		const memberIndex = memberInDataBase?.membership.findIndex(
+		const memberIndex = memberInDataBase.membership.findIndex(
 			m => m.serverId === memberGuildId,
 		);
-		if (memberIndex !== -1) {
+		if (memberIndex && memberIndex !== -1) {
 			// user is in the database and in the server
 			memberInDataBase.membership[memberIndex].messageCount =
 				memberInDataBase.membership[memberIndex].messageCount + 1;
@@ -340,10 +340,10 @@ export const handleUserNotInDatabase = async (
 	};
 
 	const memberInDataBase = await findUserByDiscordId(member.id);
-	if (memberInDataBase === undefined) {
+	if (!memberInDataBase) {
 		// user not in database at all
-		if (member) update(user, initData(member));
-		if (msg && msg.member) update(user, initData(null, msg.member.id));
+		if (member) update(user, initData(member, member.id));
+		if (msg && msg.member) update(user, initData(msg.member, msg.member.id));
 		if (msg && !msg.member) update(user, initData(null, msg.author.id, msg));
 	}
 	// user in database
