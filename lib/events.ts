@@ -310,7 +310,7 @@ export const handleUserNotInDatabase = async (
 		member: Discord.GuildMember | Discord.User,
 		memberInDataBase,
 	) => {
-		const memberIndex = memberInDataBase.membership.findIndex(
+		const memberIndex = memberInDataBase?.membership.findIndex(
 			m => m.serverId === memberGuildId,
 		);
 		if (memberIndex !== -1) {

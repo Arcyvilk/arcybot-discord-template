@@ -1,14 +1,15 @@
 import { MongoClient, Db } from 'mongodb';
-import assert from 'assert';
 import type { GuildMember, Guild } from 'discord.js';
+import assert from 'assert';
+import { log } from '../log';
 import { IEmbed } from '../types/command';
+import * as Config from '../config';
 
-const DB_NAME = 'PUT_NAME_HERE';
 let db: Db;
 
 export const connectToDb = async (url: string): Promise<void> => {
 	const client = await MongoClient.connect(url);
-	db = client.db(DB_NAME);
+	db = client.db(Config.get('DATABASE_NAME'));
 };
 
 export async function upsertOne<T>(
@@ -23,6 +24,16 @@ export async function upsertOne<T>(
 	await db
 		.collection<T>(name)
 		.updateOne(filter, { $set: object }, { upsert: true });
+}
+export async function insertMany<T>(
+	name: string,
+	object: any[],
+): Promise<void> {
+	assert.ok(
+		db !== undefined,
+		'Have not connected to the database - make sure connectToDb() is called at least once',
+	);
+	await db.collection<T>(name).insertMany(object);
 }
 
 export interface User {
@@ -162,4 +173,112 @@ export async function findAllReactionsInMessage(
 		// all of the keywords must be present in the sentence at once
 		return words.length === r.keywords.length;
 	});
+}
+
+export async function completeDb(): Promise<void> {
+	const fillOptions = () => {
+		const options = [
+			{ option: 'commandSymbol', value: '!' },
+			{ option: 'assignableRoles', value: [] },
+			{ option: 'jokeRoles', value: [] },
+			{ option: 'modRoles', value: [] },
+			{ option: 'membershipRoles', value: [] },
+			{ option: 'topMembers', value: 10 },
+			{ option: 'room_log_msgs', value: [{ id: 0, guild: 0 }] },
+			{ option: 'room_log_users', value: [{ id: 0, guild: 0 }] },
+		];
+		insertMany('options', options);
+	};
+	const fillCommands = () => {
+		const commands = [
+			{
+				keyword: 'help',
+				isDisabled: false,
+				isProtected: false,
+				isModOnly: false,
+				refusal: 'No.',
+				category: 'basic',
+			},
+			{
+				keyword: 'h',
+				isDisabled: false,
+				isProtected: false,
+				isModOnly: false,
+				refusal: 'No.',
+				category: 'basic',
+			},
+			{
+				keyword: 'hmod',
+				isDisabled: false,
+				isProtected: false,
+				isModOnly: true,
+				description: 'returns the list of all moderator commands',
+				refusal: 'No.',
+				category: 'basic',
+			},
+		];
+		insertMany('commands', commands);
+	};
+	const fillReactions = () => {
+		const reactions = [
+			{
+				keywords: ['text_reaction'],
+				reaction_list: [
+					{
+						chance: 100,
+						response:
+							"This reaction will cause the bot to react with this sentence when it detects 'text_reaction' keyword text",
+					},
+				],
+			},
+			{
+				keywords: ['emoji_reaction'],
+				reaction_list: [
+					{
+						chance: 100,
+						emoji: '🍿',
+					},
+				],
+			},
+			{
+				id: 'function_reaction',
+				keywords: [],
+				reaction_list: [
+					{
+						chance: 100,
+						response: `This is more complicated reaction - 
+							bot looks for the condition from isThisFunctionalReactionExample 
+							function (lib/message.ts), and if it's fulfilled, reacts. 
+							It does not take keywords into consideration.`,
+					},
+				],
+			},
+		];
+		insertMany('reactions', reactions);
+	};
+	await db
+		.createCollection('options')
+		.then(() => {
+			fillOptions();
+			log.INFO('Missing collection OPTIONS created!');
+		})
+		.catch(() => log.INFO('Collection OPTIONS already exists.'));
+	await db
+		.createCollection('commands')
+		.then(() => {
+			fillCommands();
+			log.INFO('Missing collection COMMANDS created!');
+		})
+		.catch(() => log.INFO('Collection COMMANDS already exists.'));
+	await db
+		.createCollection('reactions')
+		.then(() => {
+			fillReactions();
+			log.INFO('Missing collection REACTIONS created!');
+		})
+		.catch(() => log.INFO('Collection REACTIONS already exists.'));
+	await db
+		.createCollection('users')
+		.then(() => log.INFO('Missing collection USERS created!'))
+		.catch(() => log.INFO('Collection USERS already exists.'));
 }

@@ -10,7 +10,11 @@ import { happensWithAChanceOf } from './rng';
 import { Command } from './commands/list';
 import { IReactionDetails } from './types/reaction';
 
-import { findCommandByKeyword, findAllReactionsInMessage } from './storage/db';
+import {
+	findCommandByKeyword,
+	findReactionsById,
+	findAllReactionsInMessage,
+} from './storage/db';
 
 // LOGIC
 
@@ -51,6 +55,13 @@ const answerCommand = async (msg: Discord.Message) => {
 
 const checkForReactionTriggers = async (msg: Discord.Message) => {
 	const reactions = await findAllReactionsInMessage(msg.content);
+
+	// EXAMPLE
+	isThisFunctionalReactionExample(msg)
+		? await findReactionsById('function_reaction')
+		: await findAllReactionsInMessage(msg.content);
+	// END OF EXAMPLE
+
 	if (reactions.length === 0) {
 		return;
 	}
@@ -91,3 +102,9 @@ const classifyMessage = async (msg: Discord.Message): Promise<void> => {
 };
 
 export { classifyMessage, isUserAdmin };
+
+// EXAMPLE
+const isThisFunctionalReactionExample = async (msg: Discord.Message) => {
+	const allUpperCase = msg.content.toUpperCase();
+	return allUpperCase === msg.content;
+};
