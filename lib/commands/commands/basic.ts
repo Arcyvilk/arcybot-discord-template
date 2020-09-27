@@ -24,10 +24,15 @@ export const help = async (msg: Discord.Message): Promise<void> => {
 			if (command.description)
 				content += `- **${sym}${command.keyword}** - ${command.description}\n`;
 		});
-		fields.push({ title, content });
+		if (content.length > 0) fields.push({ title, content });
 	}
 
-	const embed = createEmbed('📜 List of commands', fields);
+	let embed;
+	if (fields.length > 0) embed = createEmbed('📜 List of commands', fields);
+	else
+		embed = createEmbed('📜 List of commands', [
+			{ title: '___', content: 'There is no commands!' },
+		]);
 	msg.author
 		.send({ embed })
 		.then(() => msg.react('📩'))
@@ -53,14 +58,20 @@ export const hmod = async (msg: Discord.Message): Promise<void> => {
 	for (const category in commands) {
 		const title = `Category ${category.toUpperCase()}`;
 		let content = '';
-		commands[category].map(
-			(command: Command) =>
-				(content += `\`\`-\`\`**${sym}${command.keyword}** - ${command.description}\n`),
-		);
-		fields.push({ title, content });
+		commands[category].map((command: Command) => {
+			if (command.description)
+				content += `\`\`-\`\`**${sym}${command.keyword}** - ${command.description}\n`;
+		});
+		if (content.length > 0) fields.push({ title, content });
 	}
 
-	const embed = createEmbed('📜 List of moderator commands', fields);
+	let embed;
+	if (fields.length > 0)
+		embed = createEmbed('📜 List of moderator commands', fields);
+	else
+		embed = createEmbed('📜 List of moderator commands', [
+			{ title: '___', content: 'There is no moderator commands!' },
+		]);
 	msg.author
 		.send({ embed })
 		.then(() => msg.react('📩'))

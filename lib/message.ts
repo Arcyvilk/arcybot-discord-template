@@ -32,7 +32,7 @@ const answer = (msg: Discord.Message, answer: string) =>
 const answerCommand = async (msg: Discord.Message) => {
 	const command = await findCommandByKeyword(getKeyword(msg));
 	if (command === undefined) {
-		await msg.react(':questionmark:244535324737273857');
+		await msg.react('❓');
 		return;
 	}
 
@@ -50,7 +50,7 @@ const answerCommand = async (msg: Discord.Message) => {
 		return;
 	}
 
-	await msg.react(':questionmark:244535324737273857');
+	await msg.react('❓');
 };
 
 const checkForReactionTriggers = async (msg: Discord.Message) => {
