@@ -12,7 +12,7 @@ import { IReactionDetails } from './types/reaction';
 
 import {
 	findCommandByKeyword,
-	findReactionsById,
+	// findReactionsById,
 	findAllReactionsInMessage,
 } from './storage/db';
 
@@ -104,7 +104,7 @@ const classifyMessage = async (msg: Discord.Message): Promise<void> => {
 export { classifyMessage, isUserAdmin };
 
 // EXAMPLE
-const isThisFunctionalReactionExample = (msg: Discord.Message) => {
-	const allUpperCase = msg.content.toUpperCase();
-	return allUpperCase === msg.content;
-};
+// const isThisFunctionalReactionExample = (msg: Discord.Message) => {
+// 	const allUpperCase = msg.content.toUpperCase();
+// 	return allUpperCase === msg.content;
+// };

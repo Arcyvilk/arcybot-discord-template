@@ -289,6 +289,41 @@ export const initData = (
 	};
 };
 
+const updateUserInDatabase = async (
+	member: Discord.GuildMember | Discord.User,
+	memberInDataBase,
+	memberGuildId,
+	msg,
+) => {
+	const memberIndex = memberInDataBase.membership.findIndex(
+		m => m.serverId === memberGuildId,
+	);
+	if (memberIndex !== -1) {
+		// user is in the database and in the server
+		memberInDataBase.membership[memberIndex].messageCount =
+			memberInDataBase.membership[memberIndex].messageCount + 1;
+		if (memberInDataBase.membership[memberIndex].joined === 0)
+			memberInDataBase.membership[memberIndex].joined = Date.now();
+		if (memberInDataBase.membership[memberIndex].firstMessage === 0)
+			memberInDataBase.membership[memberIndex].firstMessage = Date.now();
+		await upsertUser(member.id, memberInDataBase);
+	} else {
+		// user is in database but not in the server
+		const serverData = {
+			serverId: memberGuildId,
+			messageCount: 1,
+			firstMessage: Date.now(),
+			joined: msg
+				? msg.member && msg.member.joinedAt
+					? new Date(msg.member.joinedAt).getTime()
+					: Date.now()
+				: 0,
+		};
+		memberInDataBase.membership.push(serverData);
+		await upsertUser(member.id, memberInDataBase);
+	}
+};
+
 export const handleUserNotInDatabase = async (
 	member?: Discord.GuildMember | null,
 	msg?: Discord.Message | null,
@@ -306,48 +341,33 @@ export const handleUserNotInDatabase = async (
 			? member.guild.id
 			: null;
 	if (!memberUserId || !memberGuildId) return;
-	const update = async (
-		member: Discord.GuildMember | Discord.User,
-		memberInDataBase,
-	) => {
-		const memberIndex = memberInDataBase.membership.findIndex(
-			m => m.serverId === memberGuildId,
-		);
-		if (memberIndex && memberIndex !== -1) {
-			// user is in the database and in the server
-			memberInDataBase.membership[memberIndex].messageCount =
-				memberInDataBase.membership[memberIndex].messageCount + 1;
-			if (memberInDataBase.membership[memberIndex].joined === 0)
-				memberInDataBase.membership[memberIndex].joined = Date.now();
-			if (memberInDataBase.membership[memberIndex].firstMessage === 0)
-				memberInDataBase.membership[memberIndex].firstMessage = Date.now();
-			await upsertUser(member.id, memberInDataBase);
-		} else {
-			// user is in database but not in the server
-			const serverData = {
-				serverId: memberGuildId,
-				messageCount: 1,
-				firstMessage: Date.now(),
-				joined: msg
-					? msg.member && msg.member.joinedAt
-						? new Date(msg.member.joinedAt).getTime()
-						: Date.now()
-					: 0,
-			};
-			memberInDataBase.membership.push(serverData);
-			await upsertUser(member.id, memberInDataBase);
-		}
-	};
-
 	const memberInDataBase = await findUserByDiscordId(member.id);
 	if (!memberInDataBase) {
 		// user not in database at all
-		if (member) update(user, initData(member, member.id));
-		if (msg && msg.member) update(user, initData(msg.member, msg.member.id));
-		if (msg && !msg.member) update(user, initData(null, msg.author.id, msg));
+		if (member)
+			updateUserInDatabase(
+				user,
+				initData(member, member.id),
+				memberGuildId,
+				msg,
+			);
+		if (msg && msg.member)
+			updateUserInDatabase(
+				user,
+				initData(msg.member, msg.member.id),
+				memberGuildId,
+				msg,
+			);
+		if (msg && !msg.member)
+			updateUserInDatabase(
+				user,
+				initData(null, msg.author.id, msg),
+				memberGuildId,
+				msg,
+			);
 	}
 	// user in database
-	else update(user, memberInDataBase);
+	else updateUserInDatabase(user, memberInDataBase, memberGuildId, msg);
 };
 
 export const handlePossibleMembershipRole = async (
