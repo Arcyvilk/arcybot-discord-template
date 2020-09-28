@@ -29,7 +29,11 @@ Then you can invite the bot to your server and voila!
 
 - navigate to the [bot's template repository](https://github.com/Arcyvilk/bot-arcytemplate)
 - click the green `Use this template` button
+
+![](https://github.com/Arcyvilk/arcybot-template/blob/gh-pages/imgs/usetemplate.png)
 - when prompted, choose your bot's repository name, uncheck the `Include all branches` checkbox, then click the `Create repository from template` button
+
+![](https://github.com/Arcyvilk/arcybot-template/blob/gh-pages/imgs/createrepo.png)
 - you should get redirected to your new repository. Now [clone it](https://docs.github.com/en/enterprise/2.13/user/articles/cloning-a-repository)!
 - open your local copy of the repository and navigate to the `config` folder
 - clone the `config.example.json` file and name the duplicate `config.json`
@@ -103,7 +107,11 @@ First, navigate to [Discord Developer](https://discord.com/developers/applicatio
 
 After confirming your new bot's name, you will be redirected to its website. What you should do now is to navigate to "Bot" tab on the left sidebar. Once you're there, click the "Add bot" button on the right. When you get asked if you are sure that want to do it, confirm.
 
+![](https://github.com/Arcyvilk/arcybot-template/blob/gh-pages/imgs/addabot.png)
+
 Your bot's name and (default) avatar should appear, and just under them there is a "Token" section. Click the "Copy" button to click it.
+
+![](https://github.com/Arcyvilk/arcybot-template/blob/gh-pages/imgs/copytoken.png)
 
 Now navigate back to the bot's code. Find the `config.json` file that you created in the first step, and put the copied token in the `DISCORD_TOKEN` field.
 
