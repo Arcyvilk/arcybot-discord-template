@@ -1,5 +1,0 @@
-{
-	"DISCORD_TOKEN": "example",
-	"DATABASE_NAME": "example",
-	"DATABASE_URL": "mongodb://LOGIN:PASSWORD@HOST:PORT/COLLECTION_NAME?authSource=admin"
-}
