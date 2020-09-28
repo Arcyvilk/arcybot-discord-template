@@ -10,7 +10,8 @@ The template includes:
 
 # Table of contents
 
-* TOC {:toc}
+* TOC 
+{:toc}
 
 ---
 
