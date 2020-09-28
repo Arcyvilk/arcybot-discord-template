@@ -5,4 +5,4 @@ It comes with initial MongoDB support, and you will need a Mongo database for it
 
 ## Documentation
 
-[Available here](arcyvilk.github.io/arcybot-template)!
+[Available here](http://arcyvilk.github.io/arcybot-template)!
