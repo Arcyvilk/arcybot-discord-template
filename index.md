@@ -164,9 +164,9 @@ https://discord.com/oauth2/authorize?client_id=CLIENT_ID&scope=bot&permissions=2
 
 Click the link and add the bot to your server.
 
-![]()
+![](https://raw.githubusercontent.com/Arcyvilk/arcybot-discord-template/gh-pages/imgs/invbot.png)
 
-![]()
+![](https://raw.githubusercontent.com/Arcyvilk/arcybot-discord-template/gh-pages/imgs/invbot2.png)
 
 ### Running the bot
 
