@@ -10,12 +10,12 @@ The template includes:
 
 # Table of contents
 
-* TOC 
-{:toc}
+- TOC
+  {:toc}
 
 ---
 
-# Setting up
+# Tutorial: Setting up
 
 Before you can get bot up and running, you have to do three things:
 
@@ -25,18 +25,24 @@ Before you can get bot up and running, you have to do three things:
 
 Then you can invite the bot to your server and voila!
 
+---
+
 ## Cloning this template
 
 - navigate to the [bot's template repository](https://github.com/Arcyvilk/bot-arcytemplate)
 - click the green `Use this template` button
 
 ![](https://raw.githubusercontent.com/Arcyvilk/arcybot-template/gh-pages/imgs/usetemplate.png)
+
 - when prompted, choose your bot's repository name, uncheck the `Include all branches` checkbox, then click the `Create repository from template` button
 
 ![](https://raw.githubusercontent.com/Arcyvilk/arcybot-template/gh-pages/imgs/createrepo.png)
+
 - you should get redirected to your new repository. Now [clone it](https://docs.github.com/en/enterprise/2.13/user/articles/cloning-a-repository)!
 - open your local copy of the repository and navigate to the `config` folder
 - clone the `config.example.json` file and name the duplicate `config.json`
+
+---
 
 ## Setting up MongoDB
 
@@ -101,9 +107,35 @@ You need to remember `YOUR_BOT_LOGIN` and `YOUR_BOT_PASSWORD` so you can fill th
 
 Don't forget to edit that URL to reflect your data!
 
-## Creating a Discord Bot application
+### Using your database
+
+To view and edit your database's contents you can either use shell commands, or a GUI. I recommend using GUI because it makes your life much easier.
+
+A very good and free MongoDB GUI is [MongoDB Compass](https://www.mongodb.com/try/download/compass). Just navigate to the website and follow the instructions to download and install it.
+
+After the installation open the MongoDB Compass. You should see this screen:
+
+![]()
+
+I recommend clicking the `Fill in connection fields individually` option. Once you do it, you should see this screen:
+
+![]()
+
+If you do not see the fields at the bottom, you need to change the Authentication method from `None` to `Username/password`. Fill the fields accordingly to the screenshot above using your Administrator credentials that we created above, and click "Connect". You should be able to see your database now. It is empty for now, but it will get filled automatically when we start the bot for the first time.
+
+---
+
+## Setting the bot
+
+We have the code as the local copy and the database set up. Now we need to make Discord acknowledge out new bot.
+
+### Creating a Discord Bot application
 
 First, navigate to [Discord Developer](https://discord.com/developers/applications) website. Click the "New application" button in the top right corner. You will be prompted to enter the name of your new bot. Call them something nice (◡‿◡✿)
+
+![]()
+
+![]()
 
 After confirming your new bot's name, you will be redirected to its website. What you should do now is to navigate to "Bot" tab on the left sidebar. Once you're there, click the "Add bot" button on the right. When you get asked if you are sure that want to do it, confirm.
 
@@ -117,19 +149,19 @@ Now navigate back to the bot's code. Find the `config.json` file that you create
 
 Permissions that your bot should have:
 
-- General permissions: Manage roles
-- Text permissions: Send messages, Embed links, Use external emojis, Add reactions
+- **General permissions**: Manage roles
+- **Text permissions**: Send messages, Embed links, Use external emojis, Add reactions
 
-## Inviting the bot to your server
+### Inviting the bot to your server
 
 Simply copy the link below, replace the `CLIENT_ID` with the Client ID of your bot application and the invite link is ready.
 The `permissions` flag gives the bot by default the permissions listed above. If you want you can insert a different permissions string here.
 
-https://discord.com/oauth2/authorize?client_id=CLIENT_ID&scope=bot&permissions=268716096
+[https://discord.com/oauth2/authorize?client_id=CLIENT_ID&scope=bot&permissions=268716096](https://discord.com/oauth2/authorize?client_id=CLIENT_ID&scope=bot&permissions=268716096)
 
 You're all set! You can run the bot now.
 
-## Running the bot
+### Running the bot
 
 After completing all the previous steps, enter the bot's directory and open a shell there, then enter the following commands:
 
@@ -139,17 +171,23 @@ After completing all the previous steps, enter the bot's directory and open a sh
 
 It's alive now!
 
-# Working with the template
+---
+
+# Tutorial: Bot's first steps
 
 WIP
+
+---
 
 ## Adding new commands
 
-WIP
+There are three types of commands that you can add to the bot - text command, embed command and a custom command.
+
+Text command makes bot return a given string. Embed command allows you to wrap bot's answer in an embed, and a custom command is fully customizable and allows the bot to do whatever you want it to!
 
 ### Text commands
 
-WIP
+To add a simple text command
 
 ### Embed commands
 
@@ -159,9 +197,13 @@ WIP
 
 WIP
 
+---
+
 ## Adding new reactions
 
 WIP
+
+---
 
 ## Logging events
 
