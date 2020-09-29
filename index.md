@@ -207,9 +207,9 @@ All commands, no matter if text, embed or custom ones, share those fields.
 
 To add a text command, simply add a new document to the `commands` collection and fill it accordingly to the basic command object above, then add a `text` field to it and fill it with the response that the bot should return.
 
-![]()
+![](https://raw.githubusercontent.com/Arcyvilk/arcybot-discord-template/gh-pages/imgs/insertdoc.png)
 
-![]()
+![](https://raw.githubusercontent.com/Arcyvilk/arcybot-discord-template/gh-pages/imgs/insertdoc2.png)
 
 This is what the command looks like in use:
 
