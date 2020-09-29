@@ -115,11 +115,11 @@ A very good and free MongoDB GUI is [MongoDB Compass](https://www.mongodb.com/tr
 
 After the installation open the MongoDB Compass. You should see this screen:
 
-![]()
+![](https://raw.githubusercontent.com/Arcyvilk/arcybot-discord-template/gh-pages/imgs/compass1.png)
 
 I recommend clicking the `Fill in connection fields individually` option. Once you do it, you should see this screen:
 
-![]()
+![](https://raw.githubusercontent.com/Arcyvilk/arcybot-discord-template/gh-pages/imgs/compass2.png)
 
 If you do not see the fields at the bottom, you need to change the Authentication method from `None` to `Username/password`. Fill the fields accordingly to the screenshot above using your Administrator credentials that we created above, and click "Connect". You should be able to see your database now. It is empty for now, but it will get filled automatically when we start the bot for the first time.
 
@@ -133,9 +133,9 @@ We have the code as the local copy and the database set up. Now we need to make 
 
 First, navigate to [Discord Developer](https://discord.com/developers/applications) website. Click the "New application" button in the top right corner. You will be prompted to enter the name of your new bot. Call them something nice (◡‿◡✿)
 
-![]()
+![](https://raw.githubusercontent.com/Arcyvilk/arcybot-discord-template/gh-pages/imgs/newapp.png)
 
-![]()
+![](https://raw.githubusercontent.com/Arcyvilk/arcybot-discord-template/gh-pages/imgs/addabot2.png)
 
 After confirming your new bot's name, you will be redirected to its website. What you should do now is to navigate to "Bot" tab on the left sidebar. Once you're there, click the "Add bot" button on the right. When you get asked if you are sure that want to do it, confirm.
 
@@ -185,13 +185,41 @@ There are three types of commands that you can add to the bot - text command, em
 
 Text command makes bot return a given string. Embed command allows you to wrap bot's answer in an embed, and a custom command is fully customizable and allows the bot to do whatever you want it to!
 
+The basic object for a command (stored in the database, collection `commands`) looks like that:
+
+
+```
+{
+  keyword: string, // this is a keyword you use to invoke the command
+  isDisabled: boolean, // if set to true, command cannot be used
+  isProtected: boolean, // currently doesn't do anything
+  isModOnly: boolean, // if set to true, only users with ADMINISTRATOR role can use this command
+  refusal: string, // custom text returned by bot when it refuses to execute a command
+  category: string, // allows to segregate the commands to categories in help
+  description?: string, // describes the command in help. If this field is not present, the command won't appear in help
+}
+
+```
+
+All commands, no matter if text, embed or custom ones, share those fields.
+
 ### Text commands
 
-To add a simple text command
+To add a text command, simply add a new document to the `commands` collection and fill it accordingly to the basic command object above, then add a `text` field to it and fill it with the response that the bot should return.
+
+![]()
+
+![]()
+
+This is what the command looks like in use:
+
+![](https://raw.githubusercontent.com/Arcyvilk/arcybot-discord-template/gh-pages/imgs/textcmd.png)
 
 ### Embed commands
 
-WIP
+Example of an embed command in use:
+
+![](https://raw.githubusercontent.com/Arcyvilk/arcybot-discord-template/gh-pages/imgs/embedcmd.png)
 
 ### Custom commands
 
