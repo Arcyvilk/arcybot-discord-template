@@ -84,9 +84,9 @@ Voila! Your database now has an admin account. Now whenever you want to perform 
 
 ### Creating a MongoDB account for your bot
 
-After installing and preparing the Administrator account, I recommend to create a secondary account for the bot. This allows you to track what the bot does in the database, and also secures your database in case your bot's credentials get leaked.
+After installing and preparing the Administrator account, I recommend creating a secondary account for the bot with less permissions. This allows you to track what the bot does in the database, and also secures your database in case your bot's credentials get leaked.
 
-To do this, do the following:
+To do this, use the following commands in the shell:
 
 - `mongo --port YOUR_PORT_HERE`
 - `use admin`
@@ -109,9 +109,7 @@ Don't forget to edit that URL to reflect your data!
 
 ### Using your database
 
-To view and edit your database's contents you can either use shell commands, or a GUI. I recommend using GUI because it makes your life much easier.
-
-A very good and free MongoDB GUI is [MongoDB Compass](https://www.mongodb.com/try/download/compass). Just navigate to the website and follow the instructions to download and install it.
+To view and edit your database's contents you can either use shell commands, or a GUI. I recommend using GUI because it makes your life much easier. A very good and free MongoDB GUI is [MongoDB Compass](https://www.mongodb.com/try/download/compass) - just navigate to the website and follow the instructions to download and install it.
 
 After the installation open the MongoDB Compass. You should see this screen:
 
@@ -121,7 +119,7 @@ I recommend clicking the `Fill in connection fields individually` option. Once y
 
 ![](https://raw.githubusercontent.com/Arcyvilk/arcybot-discord-template/gh-pages/imgs/compass2.png)
 
-If you do not see the fields at the bottom, you need to change the Authentication method from `None` to `Username/password`. Fill the fields accordingly to the screenshot above using your Administrator credentials that we created above, and click "Connect". You should be able to see your database now. It is empty for now, but it will get filled automatically when we start the bot for the first time.
+If you see less fields than on the attached screenshot, you need to change the Authentication method from `None` to `Username / Password`. Fill the fields accordingly to the screenshot above using your Administrator credentials that we created earlier and click "Connect". You should be able to see your database now. It is empty for now, but it will get filled automatically when we run the bot for the first time.
 
 ---
 
@@ -131,17 +129,17 @@ We have the code as the local copy and the database set up. Now we need to make 
 
 ### Creating a Discord Bot application
 
-First, navigate to [Discord Developer](https://discord.com/developers/applications) website. Click the "New application" button in the top right corner. You will be prompted to enter the name of your new bot. Call them something nice (◡‿◡✿)
+First, navigate to [Discord Developer](https://discord.com/developers/applications) website. Click the "New application" button in the top right corner. You will be prompted to enter the name of your new bot. Call it something nice (◡‿◡✿)
 
 ![](https://raw.githubusercontent.com/Arcyvilk/arcybot-discord-template/gh-pages/imgs/newapp.png)
 
 ![](https://raw.githubusercontent.com/Arcyvilk/arcybot-discord-template/gh-pages/imgs/addabot2.png)
 
-After confirming your new bot's name, you will be redirected to its website. What you should do now is to navigate to "Bot" tab on the left sidebar. Once you're there, click the "Add bot" button on the right. When you get asked if you are sure that want to do it, confirm.
+After confirming your new bot's name you will be redirected to its page. What you should do now is to navigate to `Bot` tab on the left sidebar. Once you're there, click the `Add bot` button on the right. At the next prompt click `Confirm`.
 
 ![](https://raw.githubusercontent.com/Arcyvilk/arcybot-template/gh-pages/imgs/addabot.png)
 
-Your bot's name and (default) avatar should appear, and just under them there is a "Token" section. Click the "Copy" button to click it.
+Your bot's name and (default) avatar should appear, and just under them there is a `Token` section. You will need to copy it.
 
 ![](https://raw.githubusercontent.com/Arcyvilk/arcybot-template/gh-pages/imgs/copytoken.png)
 
@@ -154,12 +152,21 @@ Permissions that your bot should have:
 
 ### Inviting the bot to your server
 
-Simply copy the link below, replace the `CLIENT_ID` with the Client ID of your bot application and the invite link is ready.
-The `permissions` flag gives the bot by default the permissions listed above. If you want you can insert a different permissions string here.
+Navigate to the `General Information` tab and copy the bot's Client ID:
 
-[https://discord.com/oauth2/authorize?client_id=CLIENT_ID&scope=bot&permissions=268716096](https://discord.com/oauth2/authorize?client_id=CLIENT_ID&scope=bot&permissions=268716096)
+![](https://raw.githubusercontent.com/Arcyvilk/arcybot-discord-template/gh-pages/imgs/clientid.png)
 
-You're all set! You can run the bot now.
+Now take the link below, and after replacing the `CLIENT_ID` with the Client ID of your bot application your invite link is ready! The `permissions` flag gives the bot by default the permissions listed above. If you want you can insert a different permissions string here.
+
+```
+https://discord.com/oauth2/authorize?client_id=CLIENT_ID&scope=bot&permissions=268716096
+```
+
+Click the link and add the bot to your server.
+
+![]()
+
+![]()
 
 ### Running the bot
 
@@ -169,7 +176,7 @@ After completing all the previous steps, enter the bot's directory and open a sh
 - `yarn run build`
 - `yarn start`
 
-It's alive now!
+🎉 It's alive now!
 
 ---
 
