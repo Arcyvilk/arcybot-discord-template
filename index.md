@@ -194,16 +194,15 @@ Text command makes bot return a given string. Embed command allows you to wrap b
 
 The basic object for a command (stored in the database, collection `commands`) looks like that:
 
-
 ```
 {
-  keyword: string, // this is a keyword you use to invoke the command
-  isDisabled: boolean, // if set to true, command cannot be used
-  isProtected: boolean, // currently doesn't do anything
-  isModOnly: boolean, // if set to true, only users with ADMINISTRATOR role can use this command
-  refusal: string, // custom text returned by bot when it refuses to execute a command
-  category: string, // allows to segregate the commands to categories in help
-  description?: string, // describes the command in help. If this field is not present, the command won't appear in help
+  keyword: string,       // this is a keyword you use to invoke the command
+  isDisabled: boolean,   // if set to true, command cannot be used
+  isProtected: boolean,  // currently doesn't do anything
+  isModOnly: boolean,    // if set to true, only users with ADMINISTRATOR role can use this command
+  refusal: string,       // custom text returned by bot when it refuses to execute a command
+  category: string,      // allows to segregate the commands to categories in help
+  description?: string,  // describes the command in help. If this field is not present, the command won't appear in help
 }
 
 ```
