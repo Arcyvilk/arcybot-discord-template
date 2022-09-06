@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x]
+        node-version: [16.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -24,8 +24,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
-        run: npm ci
+        run: yarn ci
       - name: Run EsLint
-        run: npm run check-lint
+        run: yarn check-lint
       - name: Check types
-        run: npm run check-types-git
+        run: yarn check-types-git
