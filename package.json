@@ -1,20 +1,24 @@
 {
 	"name": "bot-arcytemplate",
-	"version": "0.1.0",
 	"description": "Arcyvilk's template for Discord bots!",
+	"author": "Arcyvilk",
+	"version": "0.1.0",
+	"license": "ISC",
+	"homepage": "https://github.com/Arcyvilk/arcybot-discord-template",
 	"main": "index.js",
+	"engines": {
+		"node": ">=16"
+	},
 	"scripts": {
-		"test": "test",
-		"build": "rimraf dist/ && tsc -p ./ --outDir dist/",
+		"test": "echo 'add test'",
+		"build": "tsc -p ./ --outDir dist/",
 		"start": "node dist/index.js",
-		"start-dev": "npm run build && npm run start",
+		"start-dev": "yarn build && yarn start",
 		"build-watch": "tsc --watch -p ./",
 		"check-types": "tsc",
 		"check-types-git": "tsc",
 		"check-lint": "eslint . --ext .ts"
 	},
-	"author": "Arcyvilk",
-	"license": "ISC",
 	"dependencies": {
 		"@types/node": "^18.7.15",
 		"discord.js": "^14.3.0",
@@ -32,8 +36,5 @@
 		"eslint-plugin-prettier": "^4.2.1",
 		"prettier": "^2.7.1",
 		"typescript": "^4.8.2"
-	},
-	"engines": {
-		"node": ">=16"
-	}
+	}	
 }
