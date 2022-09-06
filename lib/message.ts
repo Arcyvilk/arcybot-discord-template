@@ -102,9 +102,3 @@ const classifyMessage = async (msg: Discord.Message): Promise<void> => {
 };
 
 export { classifyMessage, isUserAdmin };
-
-// EXAMPLE
-// const isThisFunctionalReactionExample = (msg: Discord.Message) => {
-// 	const allUpperCase = msg.content.toUpperCase();
-// 	return allUpperCase === msg.content;
-// };

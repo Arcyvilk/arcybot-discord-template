@@ -11,7 +11,7 @@ import {
 } from './storage/db';
 import { createEmbed, toDDHHMMSS, removeKeyword, replaceAll } from './helpers';
 import { findTextChannel } from './bot';
-import { COLORS } from './modules/colors';
+import { EmbedColor } from './modules/colors';
 
 type LogRoom = 'roomLogMsgs' | 'roomLogUsers';
 
@@ -102,7 +102,7 @@ export const msgEdit = (
 				inline: true,
 			},
 		],
-		COLORS.embed.edit,
+		EmbedColor.EDIT,
 	);
 	sendLog(oldMsg.guild, log, 'roomLogMsgs');
 };
@@ -113,7 +113,7 @@ export const msgDelete = (msg: Discord.Message): void => {
 	const newTimestamp = new Date();
 	const attachments =
 		[...msg.attachments.values()].length != 0
-			? [...msg.attachments.values()].map((att: any) => att.proxyURL).join(' ')
+			? [...msg.attachments.values()].map(att => att.proxyURL).join(' ')
 			: 'none';
 	const content = msg.content ? msg.content : '_empty message or picture_';
 	const log = createEmbed(
@@ -146,7 +146,7 @@ export const msgDelete = (msg: Discord.Message): void => {
 				inline: true,
 			},
 		],
-		COLORS.embed.delete,
+		EmbedColor.DELETE,
 	);
 	sendLog(msg.guild, log, 'roomLogMsgs');
 };
@@ -169,7 +169,7 @@ export const userJoin = async (member: Discord.GuildMember): Promise<void> => {
 				inline: true,
 			},
 		],
-		COLORS.embed.join,
+		EmbedColor.JOIN,
 	);
 
 	if (!isKnownMember(member)) {
@@ -207,7 +207,7 @@ export const userLeave = (member: Discord.GuildMember): void => {
 				inline: true,
 			},
 		],
-		COLORS.embed.leave,
+		EmbedColor.LEAVE,
 	);
 	sendLog(member.guild, log, 'roomLogUsers');
 };
@@ -235,7 +235,7 @@ export const descriptionChange = (msg: Discord.Message): void => {
 				inline: false,
 			},
 		],
-		COLORS.embed.description,
+		EmbedColor.DESCRIPTION,
 	);
 	sendLog(msg.guild, log, 'roomLogUsers');
 	sendGlobalLog(log, msg.member?.guild);
@@ -251,7 +251,7 @@ export const botJoin = (guild: Discord.Guild): void => {
 				inline: true,
 			},
 		],
-		COLORS.embed.join,
+		EmbedColor.JOIN,
 	);
 	log.INFO(`Great Herald joined ${guild.id} guild!`);
 	sendGlobalLog(botLog, guild);
@@ -426,6 +426,8 @@ export const handlePossibleMembershipRole = async (
 	});
 };
 
+// TODO
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const informAboutPromotion = (msg: Discord.Message, role: any) => {
 	const embedTitle: string = role.message.title
 		.replace(replaceAll('MEMBER_USERNAME'), msg.author.username)

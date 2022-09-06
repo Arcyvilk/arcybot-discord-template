@@ -16,7 +16,7 @@ export const help = async (msg: Discord.Message): Promise<void> => {
 	const commandsAll = await findUserCommands();
 	const commands = splitArrayByObjectKey(commandsAll, 'category');
 
-	const sym = await getCommandSymbol()!;
+	const sym = await getCommandSymbol();
 	for (const category in commands) {
 		const title = `Category ${category.toUpperCase()}`;
 		let content = '';
@@ -54,7 +54,7 @@ export const hmod = async (msg: Discord.Message): Promise<void> => {
 	const commandsAll = await findModCommands();
 	const commands = splitArrayByObjectKey(commandsAll, 'category');
 
-	const sym = await getCommandSymbol()!;
+	const sym = await getCommandSymbol();
 	for (const category in commands) {
 		const title = `Category ${category.toUpperCase()}`;
 		let content = '';

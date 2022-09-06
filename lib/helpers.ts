@@ -2,7 +2,7 @@ import Discord from 'discord.js';
 import moment from 'moment';
 import { IEmbedField } from './types/command';
 import { findOption } from './storage/db';
-import { COLORS } from './modules/colors';
+import { EmbedColor } from './modules/colors';
 
 export const getCommandSymbol = async (): Promise<string | undefined> =>
 	await findOption('commandSymbol');
@@ -53,12 +53,12 @@ export const createEmbed = (
 	const embed = thumbnail
 		? new Discord.MessageEmbed()
 				.setTitle(title)
-				.setColor(color ? `0x${color}` : `0x${COLORS.embed.main}`)
+				.setColor(color ? `0x${color}` : `0x${EmbedColor.MAIN}`)
 				.setThumbnail(thumbnail)
 				.setFooter(footer ? footer : '')
 		: new Discord.MessageEmbed()
 				.setTitle(title)
-				.setColor(color ? `0x${color}` : `0x${COLORS.embed.main}`)
+				.setColor(color ? `0x${color}` : `0x${EmbedColor.MAIN}`)
 				.setFooter(footer ? footer : '');
 	fields.map(field =>
 		embed.addField(
@@ -75,11 +75,10 @@ export const isLink = (supposedLink: string): boolean => {
 	return false;
 };
 
-export const splitArrayByObjectKey = (
-	array: Array<any>,
-	sortBy: string,
-): Array<any> =>
-	array.reduce((reducer: Array<any>, obj: any) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const splitArrayByObjectKey = (array: any[], sortBy: string): any[] =>
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	array.reduce((reducer: any[], obj: any) => {
 		const key = obj[sortBy];
 		if (reducer[key] || (reducer[key] = [])) reducer[key].push(obj);
 		return reducer;
