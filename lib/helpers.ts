@@ -2,7 +2,7 @@ import Discord from 'discord.js';
 import moment from 'moment';
 import { IEmbedField } from './types/command';
 import { findOption } from './storage/db';
-import { COLORS } from './modules/colors';
+import { EmbedColor } from './modules/colors';
 
 export const getCommandSymbol = async (): Promise<string | undefined> =>
 	await findOption('commandSymbol');
@@ -53,12 +53,12 @@ export const createEmbed = (
 	const embed = thumbnail
 		? new Discord.MessageEmbed()
 				.setTitle(title)
-				.setColor(color ? `0x${color}` : `0x${COLORS.embed.main}`)
+				.setColor(color ? `0x${color}` : `0x${EmbedColor.MAIN}`)
 				.setThumbnail(thumbnail)
 				.setFooter(footer ? footer : '')
 		: new Discord.MessageEmbed()
 				.setTitle(title)
-				.setColor(color ? `0x${color}` : `0x${COLORS.embed.main}`)
+				.setColor(color ? `0x${color}` : `0x${EmbedColor.MAIN}`)
 				.setFooter(footer ? footer : '');
 	fields.map(field =>
 		embed.addField(

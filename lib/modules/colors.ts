@@ -1,14 +1,8 @@
-export const COLORS = {
-	graphs: {
-		secondary: '#434d66',
-		stroke: '#ddd',
-	},
-	embed: {
-		main: 'FDC000',
-		join: '51E61C',
-		leave: 'C70000',
-		edit: '83C4F2',
-		delete: 'C70000',
-		description: '8442F5',
-	},
-};
+export enum EmbedColor {
+	MAIN = 'FDC000',
+	JOIN = '51E61C',
+	LEAVE = 'C70000',
+	EDIT = '83C4F2',
+	DELETE = 'C70000',
+	DESCRIPTION = '8442F5',
+}

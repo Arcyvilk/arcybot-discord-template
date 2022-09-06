@@ -218,6 +218,7 @@ const fillOptions = () => {
 	];
 	insertMany('options', options);
 };
+
 const fillCommands = () => {
 	const commands = [
 		{
@@ -250,6 +251,7 @@ const fillCommands = () => {
 	];
 	insertMany('commands', commands);
 };
+
 const fillReactions = () => {
 	const reactions = [
 		{
