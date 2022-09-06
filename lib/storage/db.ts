@@ -1,4 +1,4 @@
-import { MongoClient, Db } from 'mongodb';
+import { MongoClient, Db, Filter } from 'mongodb';
 import type { GuildMember, Guild } from 'discord.js';
 import assert from 'assert';
 import { log } from '../log';
@@ -14,7 +14,7 @@ export const connectToDb = async (url: string): Promise<void> => {
 
 export async function upsertOne<T>(
 	name: string,
-	filter: any,
+	filter: Filter<T>,
 	object: T,
 ): Promise<void> {
 	assert.ok(
@@ -25,10 +25,7 @@ export async function upsertOne<T>(
 		.collection<T>(name)
 		.updateOne(filter, { $set: object }, { upsert: true });
 }
-export async function insertMany<T>(
-	name: string,
-	object: any[],
-): Promise<void> {
+export async function insertMany<T>(name: string, object: T[]): Promise<void> {
 	assert.ok(
 		db !== undefined,
 		'Have not connected to the database - make sure connectToDb() is called at least once',
@@ -133,8 +130,8 @@ export async function findModCommands(): Promise<Command[]> {
 	const r = db.collection('commands').find({
 		isModOnly: true,
 	});
-
-	return await r.toArray();
+	const result = await r.toArray();
+	return result;
 }
 
 export async function findUserCommands(): Promise<Command[]> {
@@ -142,19 +139,23 @@ export async function findUserCommands(): Promise<Command[]> {
 		isModOnly: false,
 	});
 
-	return await r.toArray();
+	const result = await r.toArray();
+	return result;
 }
 
 export async function findCommandByKeyword(
 	keyword: string,
 ): Promise<Command | undefined> {
 	const c = db.collection('commands');
-	return (await c.findOne({ keyword })) ?? undefined;
+	const result = (await c.findOne({ keyword })) ?? undefined;
+	return result;
 }
 
 export interface Reaction {
 	id: string;
 	keywords: string[];
+	// TODO
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	reactionList: any[];
 }
 

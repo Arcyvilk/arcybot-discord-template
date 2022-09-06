@@ -75,11 +75,10 @@ export const isLink = (supposedLink: string): boolean => {
 	return false;
 };
 
-export const splitArrayByObjectKey = (
-	array: Array<any>,
-	sortBy: string,
-): Array<any> =>
-	array.reduce((reducer: Array<any>, obj: any) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const splitArrayByObjectKey = (array: any[], sortBy: string): any[] =>
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	array.reduce((reducer: any[], obj: any) => {
 		const key = obj[sortBy];
 		if (reducer[key] || (reducer[key] = [])) reducer[key].push(obj);
 		return reducer;

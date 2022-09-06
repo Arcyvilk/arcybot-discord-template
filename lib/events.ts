@@ -113,7 +113,7 @@ export const msgDelete = (msg: Discord.Message): void => {
 	const newTimestamp = new Date();
 	const attachments =
 		[...msg.attachments.values()].length != 0
-			? [...msg.attachments.values()].map((att: any) => att.proxyURL).join(' ')
+			? [...msg.attachments.values()].map(att => att.proxyURL).join(' ')
 			: 'none';
 	const content = msg.content ? msg.content : '_empty message or picture_';
 	const log = createEmbed(
@@ -426,6 +426,8 @@ export const handlePossibleMembershipRole = async (
 	});
 };
 
+// TODO
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const informAboutPromotion = (msg: Discord.Message, role: any) => {
 	const embedTitle: string = role.message.title
 		.replace(replaceAll('MEMBER_USERNAME'), msg.author.username)
