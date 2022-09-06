@@ -10,14 +10,15 @@
 		"node": ">=16"
 	},
 	"scripts": {
-		"test": "echo 'add test'",
+		"test": "echo TODO",
 		"build": "tsc -p ./ --outDir dist/",
 		"build:watch": "tsc --watch -p ./",
 		"start": "node dist/index.js",
 		"start:dev": "yarn build && yarn start",
 		"check:types": "tsc",
 		"check:types:git": "tsc",
-		"check:lint": "eslint . --ext .ts"
+		"check:lint": "eslint . --ext .ts",
+		"release": "echo TODO"
 	},
 	"dependencies": {
 		"@types/node": "^18.7.15",
